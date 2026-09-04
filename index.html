@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Даниил — Python-разработчик</title>
+  <meta name="description" content="Портфолио начинающего Python-бэкенд разработчика: проекты, стек, контакты.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="header">
+    <nav class="nav container">
+      <a href="#" class="nav__logo">даниил<span class="accent">.dev</span></a>
+      <ul class="nav__links">
+        <li><a href="#about">Обо мне</a></li>
+        <li><a href="#stack">Стек</a></li>
+        <li><a href="#projects">Проекты</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero container">
+      <p class="hero__hello">Привет, меня зовут</p>
+      <h1 class="hero__title">Даниил</h1>
+      <h2 class="hero__subtitle">Python-бэкенд разработчик</h2>
+      <p class="hero__text">
+        Мне 18, я учусь backend-разработке и собираю портфолио из живых проектов:
+        каждый из них задеплоен, открыт на GitHub и доступен по ссылке.
+      </p>
+      <div class="hero__actions">
+        <a href="#projects" class="btn btn--primary">Смотреть проекты</a>
+        <a href="#contacts" class="btn btn--ghost">Связаться</a>
+      </div>
+    </section>
+
+    <section id="about" class="section container">
+      <h2 class="section__title">Обо мне</h2>
+      <p>
+        Начал с Python и небольших скриптов, сейчас углубляюсь в серверную разработку:
+        REST API, базы данных, деплой. Верю, что лучший способ учиться — доводить проекты
+        до работающего состояния в интернете, а не до папки на рабочем столе.
+      </p>
+      <p>
+        Этот сайт — часть моего плана: за лето сделать и захостить несколько
+        полноценных бэкенд-проектов. Прогресс можно отслеживать прямо здесь.
+      </p>
+    </section>
+
+    <section id="stack" class="section container">
+      <h2 class="section__title">Стек</h2>
+      <ul class="stack">
+        <li class="stack__item">Python</li>
+        <li class="stack__item">FastAPI</li>
+        <li class="stack__item">PostgreSQL</li>
+        <li class="stack__item">Git / GitHub</li>
+        <li class="stack__item">HTML / CSS / JS</li>
+        <li class="stack__item stack__item--soon">Docker — изучаю</li>
+      </ul>
+    </section>
+
+    <section id="projects" class="section container">
+      <h2 class="section__title">Проекты</h2>
+      <div class="projects">
+
+        <article class="card">
+          <div class="card__status card__status--done">готово</div>
+          <h3 class="card__title">Это портфолио</h3>
+          <p class="card__text">
+            Одностраничный сайт на чистом HTML/CSS. Свой домен, DNS, деплой —
+            полный цикл от кода до продакшена.
+          </p>
+          <div class="card__links">
+            <a href="#" class="card__link">Код на GitHub</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__status card__status--wip">в разработке</div>
+          <h3 class="card__title">Сокращатель ссылок</h3>
+          <p class="card__text">
+            REST API на FastAPI + PostgreSQL: короткие ссылки, редиректы,
+            статистика переходов по дням и устройствам, Swagger-документация.
+          </p>
+          <div class="card__links">
+            <span class="card__link card__link--muted">скоро</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__status card__status--planned">запланирован</div>
+          <h3 class="card__title">Агрегатор вакансий</h3>
+          <p class="card__text">
+            Сервис, который собирает вакансии для джунов через API hh.ru,
+            фильтрует по стеку и присылает новые в Telegram. Фоновые задачи, Docker.
+          </p>
+          <div class="card__links">
+            <span class="card__link card__link--muted">август 2026</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="contacts" class="section container">
+      <h2 class="section__title">Контакты</h2>
+      <p>Открыт к стажировкам и джуниор-позициям. Быстрее всего отвечаю на почту.</p>
+      <ul class="contacts">
+        <li><a href="mailto:jokerdanillll@gmail.com">jokerdanillll@gmail.com</a></li>
+        <li><a href="#" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="#" target="_blank" rel="noopener">Telegram</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Даниил · сделано руками, без конструкторов</p>
+    </div>
+  </footer>
+
+</body>
+</html>

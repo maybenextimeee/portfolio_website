@@ -5,121 +5,289 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Даниил — Python-разработчик</title>
   <meta name="description" content="Портфолио начинающего Python-бэкенд разработчика: проекты, стек, контакты.">
+  <meta name="theme-color" content="#07080c">
+
+  <!-- превью ссылки, когда её кидают в Telegram / соцсети -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Даня — Python-бэкенд разработчик">
+  <meta property="og:description" content="Проекты, стек и контакты. Открыт к стажировкам и джуниор-позициям.">
+  <meta property="og:locale" content="ru_RU">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- если JS включён — прячем блоки до появления на экране -->
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="js/main.js" defer></script>
 </head>
 <body>
 
+  <div class="bg" aria-hidden="true">
+    <div class="bg__grid"></div>
+    <div class="bg__glow bg__glow--1"></div>
+    <div class="bg__glow bg__glow--2"></div>
+  </div>
+
   <header class="header">
     <nav class="nav container">
-      <a href="#" class="nav__logo">danya<span class="accent">.dev</span></a>
-      <ul class="nav__links">
+      <a href="#top" class="nav__logo">danya<span class="accent">.dev</span><span class="nav__cursor">_</span></a>
+
+      <button class="nav__burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links">
         <li><a href="#about">Обо мне</a></li>
         <li><a href="#stack">Стек</a></li>
         <li><a href="#projects">Проекты</a></li>
-        <li><a href="#contacts">Контакты</a></li>
+        <li><a href="#contacts" class="nav__cta">Контакты</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
 
-    <section class="hero container">
-      <p class="hero__hello">Привет, меня зовут</p>
-      <h1 class="hero__title">Даня</h1>
-      <h2 class="hero__subtitle">Python-бэкенд разработчик</h2>
-      <p class="hero__text">
-        Мне 18, я учусь backend-разработке и собираю портфолио из живых проектов:
-        каждый из них задеплоен, открыт на GitHub и доступен по ссылке.
-      </p>
-      <div class="hero__actions">
-        <a href="#projects" class="btn btn--primary">Смотреть проекты</a>
-        <a href="#contacts" class="btn btn--ghost">Связаться</a>
+    <!-- ===== hero ===== -->
+    <section id="top" class="hero container">
+      <div class="hero__content">
+        <p class="hero__badge reveal"><span class="dot"></span>Открыт к стажировкам</p>
+        <p class="hero__hello reveal" style="--d: 1">Привет, меня зовут</p>
+        <h1 class="hero__title reveal" style="--d: 2">Даня</h1>
+        <h2 class="hero__subtitle reveal" style="--d: 3">
+          <span class="sr-only">Python-бэкенд разработчик</span>
+          <span class="typed" aria-hidden="true"
+                data-words='["Python-бэкенд разработчик", "делаю игры на HTML5", "довожу проекты до прода"]'>Python-бэкенд разработчик</span><span class="typed__caret" aria-hidden="true"></span>
+        </h2>
+        <p class="hero__text reveal" style="--d: 4">
+          Мне 18, я учусь backend-разработке и собираю портфолио из живых проектов:
+          каждый из них задеплоен, открыт на GitHub и доступен по ссылке.
+        </p>
+        <div class="hero__actions reveal" style="--d: 5">
+          <a href="#projects" class="btn btn--primary">Смотреть проекты</a>
+          <a href="#contacts" class="btn btn--ghost">Связаться</a>
+        </div>
+      </div>
+
+      <div class="hero__visual reveal" style="--d: 3" aria-hidden="true">
+        <div class="code">
+          <div class="code__bar">
+            <i></i><i></i><i></i>
+            <span class="code__file">about_me.py</span>
+          </div>
+<pre class="code__body"><code><span class="t-key">class</span> <span class="t-cls">Developer</span>:
+    name = <span class="t-str">"Даня"</span>
+    age = <span class="t-num">18</span>
+    focus = <span class="t-str">"backend"</span>
+    stack = [<span class="t-str">"Python"</span>, <span class="t-str">"FastAPI"</span>,
+             <span class="t-str">"PostgreSQL"</span>]
+    now = <span class="t-str">"делаю HTML5-игру"</span>
+
+    <span class="t-key">def</span> <span class="t-fn">hire</span>(<span class="t-self">self</span>):
+        <span class="t-com"># самый быстрый способ</span>
+        <span class="t-key">return</span> <span class="t-str">"пиши в Telegram"</span></code></pre>
+        </div>
       </div>
     </section>
 
+    <!-- ===== обо мне ===== -->
     <section id="about" class="section container">
-      <h2 class="section__title">Обо мне</h2>
-      <p>
-        Начал с Python и небольших скриптов, сейчас углубляюсь в серверную разработку:
-        REST API, базы данных, деплой. Верю, что лучший способ учиться — доводить проекты
-        до работающего состояния в интернете, а не до папки на рабочем столе.
-      </p>
-      <p>
-        Этот сайт — часть моего плана: за лето сделать и захостить несколько
-        полноценных бэкенд-проектов. Прогресс можно отслеживать прямо здесь.
-      </p>
+      <div class="section__head reveal">
+        <span class="section__num">01</span>
+        <h2 class="section__title">Обо мне</h2>
+      </div>
+
+      <div class="about">
+        <div class="about__text reveal">
+          <p>
+            Начал с Python и небольших скриптов, сейчас углубляюсь в серверную разработку:
+            REST API, базы данных, деплой. Верю, что лучший способ учиться —
+            <strong>доводить проекты до работающего состояния в интернете</strong>,
+            а не до папки на рабочем столе.
+          </p>
+          <p>
+            Этот сайт — часть моего плана: за лето сделать и захостить несколько
+            полноценных бэкенд-проектов. Прогресс можно отслеживать прямо здесь.
+          </p>
+        </div>
+
+        <ul class="facts reveal" style="--d: 1">
+          <li><span class="facts__label">возраст</span><span class="facts__value">18 лет</span></li>
+          <li><span class="facts__label">фокус</span><span class="facts__value">backend на Python</span></li>
+          <li><span class="facts__label">сейчас</span><span class="facts__value">HTML5-игра</span></li>
+          <li><span class="facts__label">ищу</span><span class="facts__value">стажировку / junior</span></li>
+        </ul>
+      </div>
     </section>
 
+    <!-- ===== стек ===== -->
     <section id="stack" class="section container">
-      <h2 class="section__title">Стек</h2>
-      <ul class="stack">
-        <li class="stack__item">Python</li>
-        <li class="stack__item">FastAPI</li>
-        <li class="stack__item">PostgreSQL</li>
-        <li class="stack__item">Git / GitHub</li>
-        <li class="stack__item">HTML / CSS / JS</li>
-        <li class="stack__item stack__item--soon">Docker — изучаю</li>
-      </ul>
+      <div class="section__head reveal">
+        <span class="section__num">02</span>
+        <h2 class="section__title">Стек</h2>
+      </div>
+
+      <div class="stack">
+        <div class="stack__group reveal">
+          <h3 class="stack__title">Backend</h3>
+          <ul class="stack__list">
+            <li class="chip" style="--c: #ffd43b"><span class="chip__dot"></span>Python</li>
+            <li class="chip" style="--c: #05c3a7"><span class="chip__dot"></span>FastAPI</li>
+            <li class="chip" style="--c: #6b9bd1"><span class="chip__dot"></span>PostgreSQL</li>
+          </ul>
+        </div>
+
+        <div class="stack__group reveal" style="--d: 1">
+          <h3 class="stack__title">Frontend</h3>
+          <ul class="stack__list">
+            <li class="chip" style="--c: #f06529"><span class="chip__dot"></span>HTML</li>
+            <li class="chip" style="--c: #9b6bd8"><span class="chip__dot"></span>CSS</li>
+            <li class="chip" style="--c: #f7df1e"><span class="chip__dot"></span>JavaScript</li>
+          </ul>
+        </div>
+
+        <div class="stack__group reveal" style="--d: 2">
+          <h3 class="stack__title">Инструменты</h3>
+          <ul class="stack__list">
+            <li class="chip" style="--c: #f05032"><span class="chip__dot"></span>Git / GitHub</li>
+            <li class="chip" style="--c: #ffffff"><span class="chip__dot"></span>Vercel</li>
+            <li class="chip chip--soon" style="--c: #2496ed"><span class="chip__dot"></span>Docker — изучаю</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
+    <!-- ===== проекты ===== -->
     <section id="projects" class="section container">
-      <h2 class="section__title">Проекты</h2>
+      <div class="section__head reveal">
+        <span class="section__num">03</span>
+        <h2 class="section__title">Проекты</h2>
+      </div>
+
       <div class="projects">
 
-        <article class="card">
-          <div class="card__status card__status--done">готово</div>
-          <h3 class="card__title">Это портфолио</h3>
-          <p class="card__text">
-            Одностраничный сайт на чистом HTML/CSS. Свой домен, DNS, деплой —
-            полный цикл от кода до продакшена.
-          </p>
-          <div class="card__links">
-            <a href="#" class="card__link">Код на GitHub</a>
+        <!-- TODO: название игры, описание, ссылка «Играть» и на GitHub -->
+        <article class="project project--featured reveal">
+          <div class="game" aria-hidden="true">
+            <div class="game__stars"></div>
+            <div class="game__sun"></div>
+            <div class="game__floor"></div>
+            <p class="game__text">PRESS START</p>
+          </div>
+
+          <div class="project__body">
+            <div class="project__top">
+              <span class="status status--wip">в разработке</span>
+            </div>
+            <h3 class="project__title">HTML5-игра</h3>
+            <p class="project__text">
+              Браузерная игра на HTML5 и JavaScript. Будет запускаться прямо здесь,
+              на сайте, — без установки и регистрации.
+            </p>
+            <ul class="tags">
+              <li>HTML5</li>
+              <li>JavaScript</li>
+            </ul>
+            <div class="project__actions">
+              <span class="btn btn--primary btn--disabled">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                Играть — скоро
+              </span>
+            </div>
           </div>
         </article>
 
-        <article class="card">
-          <div class="card__status card__status--wip">в разработке</div>
-          <h3 class="card__title">Сокращатель ссылок</h3>
-          <p class="card__text">
+        <article class="project reveal">
+          <div class="project__top">
+            <span class="status status--done">готово</span>
+            <a class="project__icon" href="https://github.com/maybenextimeee/portfolio_website" target="_blank" rel="noopener" aria-label="Код на GitHub">
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            </a>
+          </div>
+          <h3 class="project__title">Это портфолио</h3>
+          <p class="project__text">
+            Одностраничный сайт на чистом HTML/CSS/JS. Свой домен, DNS, деплой —
+            полный цикл от кода до продакшена.
+          </p>
+          <ul class="tags">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JS</li>
+            <li>Vercel</li>
+          </ul>
+        </article>
+
+        <article class="project reveal" style="--d: 1">
+          <div class="project__top">
+            <span class="status status--wip">в разработке</span>
+          </div>
+          <h3 class="project__title">Сокращатель ссылок</h3>
+          <p class="project__text">
             REST API на FastAPI + PostgreSQL: короткие ссылки, редиректы,
             статистика переходов по дням и устройствам, Swagger-документация.
           </p>
-          <div class="card__links">
-            <span class="card__link card__link--muted">скоро</span>
-          </div>
+          <ul class="tags">
+            <li>FastAPI</li>
+            <li>PostgreSQL</li>
+            <li>REST</li>
+          </ul>
         </article>
 
-        <article class="card">
-          <div class="card__status card__status--planned">запланирован</div>
-          <h3 class="card__title">Агрегатор вакансий</h3>
-          <p class="card__text">
+        <article class="project reveal" style="--d: 2">
+          <div class="project__top">
+            <span class="status status--planned">запланирован</span>
+          </div>
+          <h3 class="project__title">Агрегатор вакансий</h3>
+          <p class="project__text">
             Сервис, который собирает вакансии для джунов через API hh.ru,
             фильтрует по стеку и присылает новые в Telegram. Фоновые задачи, Docker.
           </p>
-          <div class="card__links">
-            <span class="card__link card__link--muted">август 2026</span>
-          </div>
+          <ul class="tags">
+            <li>Python</li>
+            <li>hh.ru API</li>
+            <li>Telegram</li>
+            <li>Docker</li>
+          </ul>
         </article>
 
       </div>
     </section>
 
+    <!-- ===== контакты ===== -->
     <section id="contacts" class="section container">
-      <h2 class="section__title">Контакты</h2>
-      <p>Открыт к стажировкам и джуниор-позициям. Быстрее всего отвечаю в telegram.</p>
-      <ul class="contacts">
-        <li><a href="mailto:jokerdanillll@gmail.com">jokerdanillll@gmail.com</a></li>
-        <li><a href="#" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://t.me/realdanyapro" target="_blank" rel="noopener">Telegram</a></li>
-      </ul>
+      <div class="contact reveal">
+        <span class="section__num">04 · контакты</span>
+        <h2 class="contact__title">Давай <span class="gradient-text">поработаем</span> вместе</h2>
+        <p class="contact__text">
+          Открыт к стажировкам и джуниор-позициям. Быстрее всего отвечаю в Telegram.
+        </p>
+
+        <div class="contact__actions">
+          <a href="https://t.me/realdanyapro" target="_blank" rel="noopener" class="btn btn--primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Написать в Telegram
+          </a>
+          <a href="https://github.com/maybenextimeee" target="_blank" rel="noopener" class="btn btn--ghost">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <div class="contact__mail">
+          <a href="mailto:jokerdanillll@gmail.com">jokerdanillll@gmail.com</a>
+          <button class="copy" type="button" data-copy="jokerdanillll@gmail.com">копировать</button>
+        </div>
+      </div>
     </section>
 
   </main>
 
   <footer class="footer">
-    <div class="container">
+    <div class="footer__inner container">
       <p>© 2026 Даня · сделано руками, без конструкторов</p>
+      <a href="#top">наверх ↑</a>
     </div>
   </footer>
 

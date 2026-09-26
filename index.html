@@ -3,13 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Даниил — Python-разработчик</title>
-  <meta name="description" content="Портфолио начинающего Python-бэкенд разработчика: проекты, стек, контакты.">
+  <title>Даня — портфолио разработчика</title>
+  <meta name="description" content="Портфолио начинающего разработчика: проекты, стек, контакты. Изучаю программирование и довожу проекты до рабочего состояния.">
+  <link rel="canonical" href="https://www.maybenextime.ru/">
   <meta name="theme-color" content="#07080c">
+  <!-- сайт уже тёмный: просим браузер и Dark Reader не перекрашивать его -->
+  <meta name="color-scheme" content="dark">
+  <meta name="darkreader-lock">
 
   <!-- превью ссылки, когда её кидают в Telegram / соцсети -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Даня — Python-бэкенд разработчик">
+  <meta property="og:url" content="https://www.maybenextime.ru/">
+  <meta property="og:site_name" content="maybenextime.ru">
+  <meta property="og:title" content="Даня — портфолио разработчика">
   <meta property="og:description" content="Проекты, стек и контакты. Открыт к стажировкам и джуниор-позициям.">
   <meta property="og:locale" content="ru_RU">
 
@@ -33,7 +39,7 @@
 
   <header class="header">
     <nav class="nav container">
-      <a href="#top" class="nav__logo">danya<span class="accent">.dev</span><span class="nav__cursor">_</span></a>
+      <a href="#top" class="nav__logo">maybenextime<span class="accent">.ru</span><span class="nav__cursor">_</span></a>
 
       <button class="nav__burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span>
@@ -57,13 +63,14 @@
         <p class="hero__hello reveal" style="--d: 1">Привет, меня зовут</p>
         <h1 class="hero__title reveal" style="--d: 2">Даня</h1>
         <h2 class="hero__subtitle reveal" style="--d: 3">
-          <span class="sr-only">Python-бэкенд разработчик</span>
+          <span class="sr-only">Начинающий разработчик</span>
           <span class="typed" aria-hidden="true"
-                data-words='["Python-бэкенд разработчик", "делаю игры на HTML5", "довожу проекты до прода"]'>Python-бэкенд разработчик</span><span class="typed__caret" aria-hidden="true"></span>
+                data-words='["начинающий разработчик", "изучаю программирование", "делаю разные проекты", "довожу их до релиза"]'>начинающий разработчик</span><span class="typed__caret" aria-hidden="true"></span>
         </h2>
         <p class="hero__text reveal" style="--d: 4">
-          Мне 18, я учусь backend-разработке и собираю портфолио из живых проектов:
-          каждый из них задеплоен, открыт на GitHub и доступен по ссылке.
+          Мне 18, я изучаю программирование и пробую разные направления —
+          от сайтов до приложений для Windows. Здесь собираю свои проекты
+          и показываю, как расту.
         </p>
         <div class="hero__actions reveal" style="--d: 5">
           <a href="#projects" class="btn btn--primary">Смотреть проекты</a>
@@ -80,10 +87,9 @@
 <pre class="code__body"><code><span class="t-key">class</span> <span class="t-cls">Developer</span>:
     name = <span class="t-str">"Даня"</span>
     age = <span class="t-num">18</span>
-    focus = <span class="t-str">"backend"</span>
-    stack = [<span class="t-str">"Python"</span>, <span class="t-str">"FastAPI"</span>,
-             <span class="t-str">"PostgreSQL"</span>]
-    now = <span class="t-str">"делаю HTML5-игру"</span>
+    learning = [<span class="t-str">"Python"</span>, <span class="t-str">"JavaScript"</span>,
+                <span class="t-str">"и всё подряд"</span>]
+    now = <span class="t-str">"Session Controller"</span>
 
     <span class="t-key">def</span> <span class="t-fn">hire</span>(<span class="t-self">self</span>):
         <span class="t-com"># самый быстрый способ</span>
@@ -102,21 +108,22 @@
       <div class="about">
         <div class="about__text reveal">
           <p>
-            Начал с Python и небольших скриптов, сейчас углубляюсь в серверную разработку:
-            REST API, базы данных, деплой. Верю, что лучший способ учиться —
-            <strong>доводить проекты до работающего состояния в интернете</strong>,
+            Начал с Python и небольших скриптов, а сейчас пробую разное: сайты,
+            приложения для Windows, работу с API и базами данных. Пока не загоняю себя
+            в одну специализацию — хочу понять, что мне ближе. Верю, что лучший способ учиться —
+            <strong>доводить проекты до рабочего состояния</strong>,
             а не до папки на рабочем столе.
           </p>
           <p>
-            Этот сайт — часть моего плана: за лето сделать и захостить несколько
-            полноценных бэкенд-проектов. Прогресс можно отслеживать прямо здесь.
+            Этот сайт — моя точка отсчёта: сюда я добавляю каждый новый проект,
+            так что прогресс можно отслеживать прямо здесь.
           </p>
         </div>
 
         <ul class="facts reveal" style="--d: 1">
           <li><span class="facts__label">возраст</span><span class="facts__value">18 лет</span></li>
-          <li><span class="facts__label">фокус</span><span class="facts__value">backend на Python</span></li>
-          <li><span class="facts__label">сейчас</span><span class="facts__value">HTML5-игра</span></li>
+          <li><span class="facts__label">изучаю</span><span class="facts__value">программирование</span></li>
+          <li><span class="facts__label">сейчас</span><span class="facts__value">Session Controller</span></li>
           <li><span class="facts__label">ищу</span><span class="facts__value">стажировку / junior</span></li>
         </ul>
       </div>
@@ -168,7 +175,7 @@
 
       <div class="projects">
 
-        <!-- TODO: название игры, описание, ссылка «Играть» и на GitHub -->
+        <!-- TODO: название игры, скриншот, ссылка «Играть» и на GitHub -->
         <article class="project project--featured reveal">
           <div class="game" aria-hidden="true">
             <div class="game__stars"></div>
@@ -219,9 +226,28 @@
           </ul>
         </article>
 
+        <!-- TODO: стек и ссылку на GitHub, когда определишься -->
         <article class="project reveal" style="--d: 1">
           <div class="project__top">
             <span class="status status--wip">в разработке</span>
+          </div>
+          <h3 class="project__title">Session Controller</h3>
+          <p class="project__text">
+            Приложение для Windows: при выключении компьютера само выходит из всех
+            твоих аккаунтов — GitHub, Google, Яндекс и других. Для общих компьютеров,
+            за которыми за день работает много людей: больше не нужно гадать,
+            вышел ли ты отовсюду.
+          </p>
+          <ul class="tags">
+            <li>Windows</li>
+            <li>Desktop</li>
+            <li>Безопасность</li>
+          </ul>
+        </article>
+
+        <article class="project reveal" style="--d: 2">
+          <div class="project__top">
+            <span class="status status--planned">запланирован</span>
           </div>
           <h3 class="project__title">Сокращатель ссылок</h3>
           <p class="project__text">
@@ -232,23 +258,6 @@
             <li>FastAPI</li>
             <li>PostgreSQL</li>
             <li>REST</li>
-          </ul>
-        </article>
-
-        <article class="project reveal" style="--d: 2">
-          <div class="project__top">
-            <span class="status status--planned">запланирован</span>
-          </div>
-          <h3 class="project__title">Агрегатор вакансий</h3>
-          <p class="project__text">
-            Сервис, который собирает вакансии для джунов через API hh.ru,
-            фильтрует по стеку и присылает новые в Telegram. Фоновые задачи, Docker.
-          </p>
-          <ul class="tags">
-            <li>Python</li>
-            <li>hh.ru API</li>
-            <li>Telegram</li>
-            <li>Docker</li>
           </ul>
         </article>
 

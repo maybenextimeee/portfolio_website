@@ -1,5 +1,6 @@
 /* ===== база ===== */
 :root {
+  color-scheme: dark;
   --bg: #07080c;
   --bg-elev: #0d0f15;
   --bg-card: rgba(255, 255, 255, 0.025);

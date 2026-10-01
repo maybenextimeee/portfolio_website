@@ -645,6 +645,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-width: 0;
   padding: 20px 20px 20px 0;
 }
 
@@ -694,7 +695,74 @@ body {
 }
 
 .project__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
   margin-top: 8px;
+}
+
+/* ссылка на репозиторий: иконка GitHub + owner/repo + стрелка */
+.repo {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  padding: 13px 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  font: 500 0.85rem/1.2 var(--font-mono);
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.repo:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  background: rgba(94, 225, 255, 0.06);
+  box-shadow: 0 12px 32px -14px rgba(94, 225, 255, 0.55);
+}
+
+.repo__logo {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-right: 10px;
+  transition: color 0.2s;
+}
+
+/* на узких карточках сжимается владелец, а имя репо остаётся целым */
+.repo__owner {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-dim);
+}
+
+.repo__name {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.repo__arrow {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-left: 10px;
+  color: var(--text-dim);
+  transition: transform 0.2s, color 0.2s;
+}
+
+.repo:hover .repo__logo,
+.repo:hover .repo__arrow {
+  color: var(--accent);
+}
+
+.repo:hover .repo__arrow {
+  transform: translate(2px, -2px);
 }
 
 .status {

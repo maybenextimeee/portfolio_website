@@ -87,6 +87,10 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--header-h);
+  /* Safari на iPhone считает размытое свечение за карточкой кода (filter: blur)
+     частью ширины страницы, и её можно было двигать вбок. hidden здесь нужен,
+     чтобы overflow у body не «уезжал» на окно браузера и работал на самом body. */
+  overflow-x: hidden;
 }
 
 body {
@@ -96,7 +100,9 @@ body {
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  /* clip, а не hidden: обрезает лишнее по ширине, но не делает body прокручиваемым,
+     иначе перестанет прилипать шапка (position: sticky) */
+  overflow-x: clip;
 }
 
 ::selection {
@@ -963,7 +969,8 @@ body {
   margin: 16px 0 18px;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(2rem, 6vw, 3.6rem);
+  /* Unbounded широкий: «заинтересованных» должно влезать в карточку даже на узком телефоне */
+  font-size: clamp(1.2rem, 6.2vw, 3.6rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
 }

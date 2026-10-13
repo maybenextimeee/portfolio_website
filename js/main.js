@@ -13,6 +13,14 @@ nav.querySelectorAll('.nav__links a').forEach((link) =>
   link.addEventListener('click', () => setMenu(false))
 );
 
+// ===== в логотипе — домен, с которого открыли сайт (.ru или .online) =====
+const tld = document.querySelector('.nav__tld');
+const domain = location.hostname.replace(/^www\./, '');
+// на localhost и *.vercel.app оставляем .ru из разметки
+if (tld && domain.startsWith('maybenextime.')) {
+  tld.textContent = domain.slice('maybenextime'.length);
+}
+
 // ===== шапка становится «стеклянной» после начала скролла =====
 const header = document.querySelector('.header');
 const onScroll = () => header.classList.toggle('header--scrolled', window.scrollY > 10);

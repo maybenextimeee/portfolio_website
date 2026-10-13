@@ -16,6 +16,8 @@
 portfolio/
 ├── index.html      — страница сайта
 ├── favicon.svg     — иконка вкладки
+├── og-image.png    — картинка для превью ссылки (1200×630)
+├── fonts/          — шрифты Onest, Unbounded, JetBrains Mono (woff2)
 ├── css/
 │   └── style.css   — стили
 └── js/

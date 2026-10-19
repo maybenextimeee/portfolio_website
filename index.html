@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Даня — портфолио разработчика</title>
   <meta name="description" content="Портфолио начинающего разработчика: проекты, стек, контакты. Изучаю программирование и довожу проекты до рабочего состояния.">
   <link rel="canonical" href="https://www.maybenextime.ru/">
-  <meta name="theme-color" content="#07080c">
-  <!-- сайт уже тёмный: просим браузер и Dark Reader не перекрашивать его -->
-  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0d18">
+  <meta name="color-scheme" content="dark light">
+  <!-- у сайта свои тёмная и светлая темы — просим Dark Reader не перекрашивать его -->
   <meta name="darkreader-lock">
 
   <!-- превью ссылки, когда её кидают в Telegram / соцсети -->
@@ -18,7 +18,6 @@
   <meta property="og:title" content="Даня — портфолио разработчика">
   <meta property="og:description" content="Проекты, стек и контакты. Открыт к стажировкам и джуниор-позициям.">
   <meta property="og:locale" content="ru_RU">
-  <!-- картинка превью, исходник — .claude/og-image.html -->
   <meta property="og:image" content="https://www.maybenextime.ru/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -26,304 +25,140 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <!-- шрифты первого экрана качаем сразу, не дожидаясь CSS -->
-  <link rel="preload" href="fonts/onest-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- тема ставится до отрисовки, чтобы не было вспышки: по умолчанию тёмная, светлая — если посетитель её выбрал -->
+  <script>
+    (() => { let t = null; try { t = localStorage.getItem('theme'); } catch {} const r = document.documentElement; r.dataset.theme = t === 'light' ? 'light' : 'dark'; r.classList.add('js'); })();
+  </script>
+  <link rel="preload" href="fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-
-  <!-- если JS включён — прячем блоки до появления на экране -->
-  <script>document.documentElement.classList.add('js')</script>
+  <script src="js/play.js" defer></script>
+  <script src="js/lightbox.js" defer></script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
+<div class="sky" id="sky" aria-hidden="true">
+  <div class="layer dark"><div class="stars"></div><div class="rise"><div class="sun"></div></div></div>
+  <div class="layer light"><div class="rise"><div class="sun"></div></div></div>
+</div>
 
-  <div class="bg" aria-hidden="true">
-    <div class="bg__grid"></div>
-    <div class="bg__glow bg__glow--1"></div>
-    <div class="bg__glow bg__glow--2"></div>
-  </div>
+<header class="top" id="top">
+  <a class="logo" href="#hero">Даня</a>
+  <nav><a href="#about">Обо мне</a><a href="#projects">Проекты</a><a href="#stack">Стек</a></nav>
+  <a class="cta" href="#contact">Связаться</a>
+</header>
+<button class="theme" id="theme" type="button" aria-label="Сменить тему">
+  <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+  <svg class="sunico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+</button>
 
-  <header class="header">
-    <nav class="nav container">
-      <a href="#top" class="nav__logo">maybenextime<span class="accent nav__tld">.ru</span><span class="nav__cursor">_</span></a>
-
-      <button class="nav__burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav-links">
-        <span></span><span></span>
-      </button>
-
-      <ul class="nav__links" id="nav-links">
-        <li><a href="#about">Обо мне</a></li>
-        <li><a href="#stack">Стек</a></li>
-        <li><a href="#projects">Проекты</a></li>
-        <li><a href="#contacts" class="nav__cta">Контакты</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-
-    <!-- ===== hero ===== -->
-    <section id="top" class="hero container">
-      <div class="hero__content">
-        <p class="hero__badge reveal"><span class="dot"></span>Открыт к стажировкам</p>
-        <p class="hero__hello reveal" style="--d: 1">Привет, мое имя</p>
-        <h1 class="hero__title reveal" style="--d: 2">Даня</h1>
-        <h2 class="hero__subtitle reveal" style="--d: 3">
-          <span class="sr-only">Начинающий разработчик</span>
-          <span class="typed" aria-hidden="true"
-                data-words='["начинающий разработчик", "изучаю программирование", "делаю разные проекты", "довожу их до релиза"]'>начинающий разработчик</span><span class="typed__caret" aria-hidden="true"></span>
-        </h2>
-        <p class="hero__text reveal" style="--d: 4">
-          Мне 18, я изучаю программирование с 14 лет, пробую разные направления —
-          от сайтов до приложений для Windows, небольших игр и всего, что придет в голову. Здесь собираю свои проекты
-          и показываю, над чем веду работу и что уже сделал. В данный момент обучаюсь в колледже на программиста, 3 курс.
-          Нахожусь в поиске стажировки или джуниор-позиции, чтобы получить опыт и развиваться дальше.
-        </p>
-        <div class="hero__actions reveal" style="--d: 5">
-          <a href="#projects" class="btn btn--primary">Смотреть проекты</a>
-          <a href="#contacts" class="btn btn--ghost">Связаться</a>
-        </div>
-      </div>
-
-      <div class="hero__visual reveal" style="--d: 3" aria-hidden="true">
-        <div class="code">
-          <div class="code__bar">
-            <i></i><i></i><i></i>
-            <span class="code__file">about_me.py</span>
-          </div>
-<pre class="code__body"><code><span class="t-key">class</span> <span class="t-cls">Developer</span>:
-    name = <span class="t-str">"Даня"</span>
-    age = <span class="t-num">18</span>
-    learning = [<span class="t-str">"Python"</span>, <span class="t-str">"SQL"</span>,
-                <span class="t-str">"Server structure"</span>]
-    now = [<span class="t-str">"Session Controller"</span>,
-           <span class="t-str">"Night Survivors"</span>]
-
-    <span class="t-key">def</span> <span class="t-fn">hire</span>(<span class="t-self">self</span>):
-        <span class="t-com"># самый быстрый способ</span>
-        <span class="t-key">return</span> <span class="t-str">"Telegram, Gmail, Discord"</span></code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== обо мне ===== -->
-    <section id="about" class="section container">
-      <div class="section__head reveal">
-        <span class="section__num">01</span>
-        <h2 class="section__title">Обо мне</h2>
-      </div>
-
-      <div class="about">
-        <div class="about__text reveal">
-          <p>
-            Начал изучать программирование в 14 лет, когда впервые попробовал Python. С тех пор
-            понял, что хочу попробовать себя в этом, и пошел после школы учиться на программиста.
-            Параллельно изучаю много информации самостоятельно: свой сайт, приложение под свои задачи.
-            Пока не загоняю себя в одну специализацию — хочу понять, что мне ближе. Помимо программирования 
-            увлекаюсь спортом, с детства играю в компьютерные игры. Думаю, что в данный момент времени
-            главный навык программиста — <strong>доводить проекты до рабочего состояния.</strong>
-          </p>
-          <p>
-            Этот сайт — моя точка отсчёта: я занимаюсь его регулярным обновлением,
-            так что прогресс можно отслеживать прямо здесь.
-          </p>
-        </div>
-
-        <ul class="facts reveal" style="--d: 1">
-          <li><span class="facts__label">возраст</span><span class="facts__value">18 лет</span></li>
-          <li><span class="facts__label">изучаю</span><span class="facts__value">программирование</span></li>
-          <li><span class="facts__label">сейчас</span><span class="facts__value">Session Controller</span></li>
-          <li><span class="facts__label">ищу</span><span class="facts__value">стажировку / junior</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ===== стек ===== -->
-    <section id="stack" class="section container">
-      <div class="section__head reveal">
-        <span class="section__num">02</span>
-        <h2 class="section__title">Стек</h2>
-      </div>
-
-      <div class="stack">
-        <div class="stack__group reveal">
-          <h3 class="stack__title">Backend</h3>
-          <ul class="stack__list">
-            <li class="chip" style="--c: #ffd43b"><span class="chip__dot"></span>Python</li>
-            <li class="chip" style="--c: #05c3a7"><span class="chip__dot"></span>FastAPI</li>
-            <li class="chip" style="--c: #6b9bd1"><span class="chip__dot"></span>PostgreSQL</li>
-          </ul>
-        </div>
-
-        <div class="stack__group reveal" style="--d: 1">
-          <h3 class="stack__title">Frontend</h3>
-          <ul class="stack__list">
-            <li class="chip" style="--c: #f06529"><span class="chip__dot"></span>HTML</li>
-            <li class="chip" style="--c: #9b6bd8"><span class="chip__dot"></span>CSS</li>
-            <li class="chip" style="--c: #f7df1e"><span class="chip__dot"></span>JavaScript</li>
-          </ul>
-        </div>
-
-        <div class="stack__group reveal" style="--d: 2">
-          <h3 class="stack__title">Инструменты</h3>
-          <ul class="stack__list">
-            <li class="chip" style="--c: #f05032"><span class="chip__dot"></span>Git / GitHub</li>
-            <li class="chip" style="--c: #ffffff"><span class="chip__dot"></span>Vercel</li>
-            <li class="chip chip--soon" style="--c: #2496ed"><span class="chip__dot"></span>Docker — изучаю</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== проекты ===== -->
-    <section id="projects" class="section container">
-      <div class="section__head reveal">
-        <span class="section__num">03</span>
-        <h2 class="section__title">Проекты</h2>
-      </div>
-
-      <div class="projects">
-
-        <!-- TODO: название игры, скриншот, ссылка «Играть» -->
-        <article class="project project--featured reveal">
-          <div class="game" aria-hidden="true">
-            <div class="game__stars"></div>
-            <div class="game__sun"></div>
-            <div class="game__floor"></div>
-            <p class="game__text">PRESS START</p>
-          </div>
-
-          <div class="project__body">
-            <div class="project__top">
-              <span class="status status--wip">в разработке</span>
-            </div>
-            <h3 class="project__title">Night Survivors</h3>
-            <p class="project__text">
-              Браузерная игра на HTML5 и JavaScript. Будет запускаться прямо здесь,
-              на сайте, — без установки и регистрации.
-            </p>
-            <ul class="tags">
-              <li>HTML5</li>
-              <li>JavaScript</li>
-            </ul>
-            <div class="project__actions">
-              <span class="btn btn--primary btn--disabled">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                Играть — скоро
-              </span>
-              <a class="repo" href="https://github.com/maybenextimeee/Night_survivors" target="_blank" rel="noopener" aria-label="Код Night Survivors на GitHub">
-                <svg class="repo__logo" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                <span class="repo__owner">maybenextimeee/</span><span class="repo__name">Night_survivors</span>
-                <svg class="repo__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project reveal">
-          <div class="project__top">
-            <span class="status status--done">готово</span>
-            <a class="project__icon" href="https://github.com/maybenextimeee/portfolio_website" target="_blank" rel="noopener" aria-label="Код на GitHub">
-              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            </a>
-          </div>
-          <h3 class="project__title">Это портфолио</h3>
-          <p class="project__text">
-            Одностраничный сайт на чистом HTML/CSS/JS. Свой домен, DNS, деплой —
-            полный цикл от кода до продакшена.
-          </p>
-          <ul class="tags">
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JS</li>
-            <li>GitHub Pages</li>
-          </ul>
-        </article>
-
-        <!-- TODO: стек, когда определишься -->
-        <article class="project reveal" style="--d: 1">
-          <div class="project__top">
-            <span class="status status--wip">в разработке</span>
-          </div>
-          <h3 class="project__title">Session Controller</h3>
-          <p class="project__text">
-            Приложение для Windows: при выключении компьютера само выходит из всех
-            твоих аккаунтов — GitHub, Google, Яндекс и других. Для общих компьютеров,
-            за которыми за день работает много людей: больше не нужно гадать,
-            вышел ли ты отовсюду.
-          </p>
-          <ul class="tags">
-            <li>Windows</li>
-            <li>Desktop</li>
-            <li>Безопасность</li>
-          </ul>
-          <div class="project__actions">
-            <a class="repo" href="https://github.com/maybenextimeee/session_controller" target="_blank" rel="noopener" aria-label="Код Session Controller на GitHub">
-              <svg class="repo__logo" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              <span class="repo__owner">maybenextimeee/</span><span class="repo__name">session_controller</span>
-              <svg class="repo__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="project reveal" style="--d: 2">
-          <div class="project__top">
-            <span class="status status--planned">запланирован</span>
-          </div>
-          <h3 class="project__title">Сокращатель ссылок</h3>
-          <p class="project__text">
-            REST API на FastAPI + PostgreSQL: короткие ссылки, редиректы,
-            статистика переходов по дням и устройствам, Swagger-документация.
-          </p>
-          <ul class="tags">
-            <li>FastAPI</li>
-            <li>PostgreSQL</li>
-            <li>REST</li>
-          </ul>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- ===== контакты ===== -->
-    <section id="contacts" class="section container">
-      <div class="contact reveal">
-        <span class="section__num">04 · контакты</span>
-        <h2 class="contact__title">Для <span class="gradient-text">заинтересованных</span></h2>
-        <p class="contact__text">
-          Открыт к стажировкам и джуниор-позициям. Быстрее всего отвечаю в Telegram.
-        </p>
-
-        <div class="contact__actions">
-          <a href="https://t.me/realdanyapro" target="_blank" rel="noopener" class="btn btn--primary">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            Написать в Telegram
-          </a>
-          <a href="https://github.com/maybenextimeee" target="_blank" rel="noopener" class="btn btn--ghost">
-            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            GitHub
-          </a>
-          <a href="https://discord.com/users/726790334876483644" target="_blank" rel="noopener" class="btn btn--ghost">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.182 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-            Discord
-          </a>
-        </div>
-
-        <div class="contact__mail">
-          <a href="mailto:jokerdanillll@gmail.com">jokerdanillll@gmail.com</a>
-          <button class="copy" type="button" data-copy="jokerdanillll@gmail.com">копировать</button>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <div class="footer__inner container">
-      <p>© 2026 maybenextime · сделано руками, без конструкторов</p>
-      <a href="#top">наверх ↑</a>
+<main>
+  <section class="hero" id="hero" data-play>
+    <div class="hello-row rv" style="--d:.1s">
+      <p class="hello hl">Привет, моё имя —</p>
+      <a class="nick gh" href="https://github.com/maybenextimeee" target="_blank" rel="noopener"><b>maybenextime</b></a>
     </div>
-  </footer>
+    <h1 class="name" aria-label="Даня"><span class="l" style="--i:0">Д</span><span class="l" style="--i:1">а</span><span class="l" style="--i:2">н</span><span class="l" style="--i:3">я</span></h1>
+    <div class="hero-bottom">
+      <p class="role rv" style="--d:.75s">Начинающий разработчик.<br><span class="hl">Открыт к стажировкам.</span></p>
+      <div class="rv" style="--d:.9s">
+        <p class="lead">Мне 18, изучаю программирование с 14 лет. Учусь в колледже на программиста и ищу стажировку или джуниор-позицию.</p>
+        <div class="btns"><a class="btn dark" href="#contact">Связаться</a><a class="btn glass" href="#projects">Смотреть проекты</a></div>
+      </div>
+    </div>
+  </section>
 
+  <section class="wrap" id="about">
+    <div data-play><div class="label rv">Обо мне</div><h2 class="h2 rv" style="--d:.05s">Немного <span class="hl">о себе</span></h2></div>
+    <div class="about" data-play>
+      <div class="sheet glass-card rv">
+        <p class="lead2">Начал изучать программирование в 14 лет, когда впервые попробовал <span class="hl">Python.</span> С тех пор понял, что хочу попробовать себя в этом, и пошёл после школы учиться на программиста.</p>
+        <p class="side">Параллельно изучаю много информации самостоятельно: свой сайт, приложение под свои задачи. Пробую разные направления — от сайтов до приложений для Windows, небольших игр и всего, что придёт в голову. Пока не загоняю себя в одну специализацию — хочу понять, что мне ближе.</p>
+        <p class="side">Помимо программирования увлекаюсь спортом, с детства играю в компьютерные игры.</p>
+      </div>
+      <div class="strip">
+        <div class="pol rv" style="--d:.15s"><img src="img/photo-1.jpg" alt="Даня" data-zoom="me"></div>
+        <div class="pol rv" style="--d:.3s"><img src="img/photo-2.jpg" alt="Даня" data-zoom="me"></div>
+        <div class="pol rv" style="--d:.45s"><img src="img/photo-3.jpg" alt="Даня" data-zoom="me"></div>
+      </div>
+    </div>
+    <div class="nums" data-play>
+      <div class="ncard glass-card rv"><b class="num" style="--to:18"></b><span class="cap">лет</span></div>
+      <div class="ncard glass-card rv" style="--d:.12s"><div class="numrow"><span class="pre hl">с</span><b class="num hl" style="--to:14"></b></div><span class="cap">лет изучаю программирование</span></div>
+      <div class="ncard glass-card rv" style="--d:.24s"><b class="num" style="--to:3"></b><span class="cap">курс колледжа, учусь на программиста</span></div>
+    </div>
+  </section>
+
+  <section class="principle" data-play>
+    <div class="label rv">Мой принцип</div>
+    <p class="q rv" style="--d:.08s">Доводить проекты <span class="hl">до рабочего состояния.</span></p>
+    <p class="rv" style="--d:.16s">Думаю, что в данный момент это главный навык программиста.</p>
+  </section>
+
+  <section class="wrap" id="projects">
+    <div data-play><div class="label rv">Проекты</div><h2 class="h2 rv" style="--d:.05s">Над чем <span class="hl">работаю</span></h2></div>
+    <div class="grid" data-play>
+      <article class="card glass-card rv" style="--c:#a99bff">
+        <div class="meta"><span>01</span><span class="st">В разработке</span></div>
+        <div class="video" id="nsVideo">
+          <video src="video/night-survivors-ru.mp4" muted loop playsinline preload="metadata"></video>
+        </div>
+        <div><h3>Night Survivors</h3><p>Браузерная игра на HTML5 и JavaScript. Запускается прямо в браузере — без установки и регистрации.</p>
+          <p class="note">(Релиз ожидается на Яндекс Играх — пока откладывается из-за проблем с серверами Яндекса.)</p>
+          <div class="foot">
+            <a class="go play-btn" href="https://maybenextimeee.github.io/Night_survivors/" target="_blank" rel="noopener">▶ Играть</a>
+            <a class="go gh" href="https://github.com/maybenextimeee/Night_survivors" target="_blank" rel="noopener">GitHub</a>
+            <span class="tag">HTML5 · JavaScript</span>
+          </div></div>
+      </article>
+      <article class="card glass-card rv" style="--c:#8fa8ff; --d:.1s">
+        <div class="meta"><span>02</span><span class="st">В разработке</span></div>
+        <div><h3>Session Controller</h3><p>Приложение для Windows: при выключении компьютера само выходит из всех твоих аккаунтов — GitHub, Google, Яндекс и других. Для общих компьютеров.</p>
+          <div class="foot"><a class="go gh" href="https://github.com/maybenextimeee/session_controller" target="_blank" rel="noopener">GitHub</a><span class="tag">Windows · Безопасность</span></div></div>
+      </article>
+      <article class="card glass-card rv" style="--c:#8fd6d0; --d:.2s">
+        <div class="meta"><span>03</span><span class="st">Готово</span></div>
+        <div><h3>Это портфолио</h3><p>Одностраничный сайт на чистом HTML/CSS/JS. Свой домен, DNS, деплой — полный цикл от кода до продакшена.</p>
+          <div class="foot"><a class="go gh" href="https://github.com/maybenextimeee/portfolio_website" target="_blank" rel="noopener">GitHub</a><span class="tag">HTML · CSS · JS · GitHub Pages</span></div></div>
+      </article>
+      <article class="card glass-card rv" style="--c:#9cc0f0; --d:.15s; grid-column: 1 / -1; min-height: 220px">
+        <div class="meta"><span>04</span><span class="st">Запланирован</span></div>
+        <div><h3>Сокращатель ссылок</h3><p>REST API на FastAPI + PostgreSQL: короткие ссылки, редиректы, статистика переходов по дням и устройствам, Swagger-документация.</p>
+          <div class="foot"><span class="tag">FastAPI · PostgreSQL · REST</span></div></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="stack" style="padding-top:40px" data-play>
+    <div class="label rv">Стек</div>
+    <h2 class="h2 rv" style="--d:.05s">С чем <span class="hl">работаю</span></h2>
+    <div class="marquee rv" style="--d:.15s">
+      <div class="row">
+        <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">GitHub Pages</span>
+        <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">GitHub Pages</span>
+      </div>
+      <div class="row rev">
+        <span class="chip learn">Устройство серверов <span class="hl">— изучаю</span></span><span class="chip learn">Docker <span class="hl">— изучаю</span></span><span class="chip learn">SQL <span class="hl">— изучаю</span></span>
+        <span class="chip learn">Устройство серверов <span class="hl">— изучаю</span></span><span class="chip learn">Docker <span class="hl">— изучаю</span></span><span class="chip learn">SQL <span class="hl">— изучаю</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="contact" data-play>
+    <div class="contact-card glass-card rv">
+      <div class="label">Контакты</div>
+      <h2 class="h2">Для <span class="hl">заинтересованных</span></h2>
+      <p class="sub">Открыт к стажировкам и джуниор-позициям. Быстрее всего отвечаю в Telegram.</p>
+      <div class="btns">
+        <a class="btn dark" href="https://t.me/realdanyapro" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Написать в Telegram</a>
+        <a class="btn glass gh" href="https://github.com/maybenextimeee" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn glass" href="https://discord.com/users/726790334876483644" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.182 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>Discord</a>
+      </div>
+      <div class="mail"><a href="mailto:jokerdanillll@gmail.com">jokerdanillll@gmail.com</a><button class="copy" type="button" data-copy="jokerdanillll@gmail.com">копировать</button></div>
+    </div>
+  </section>
+</main>
+<footer><span>© 2026 maybenextime</span><span>сделано руками, без конструкторов</span></footer>
 </body>
 </html>

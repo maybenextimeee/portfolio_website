@@ -1,109 +1,48 @@
-// ===== меню на мобильных =====
-const nav = document.querySelector('.nav');
-const burger = document.querySelector('.nav__burger');
+// ===== страница: облака, переключатель темы, шапка, видео, копирование почты =====
+// Анимации появления — в play.js, просмотр фото на весь экран — в lightbox.js.
 
-function setMenu(open) {
-  nav.classList.toggle('nav--open', open);
-  burger.setAttribute('aria-expanded', open);
-  burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
-}
+// иконка GitHub во всех кнопках «GitHub» и в плашке с никнеймом
+const gh = '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>';
+document.querySelectorAll('.gh').forEach((a) => a.insertAdjacentHTML('afterbegin', gh));
 
-burger.addEventListener('click', () => setMenu(!nav.classList.contains('nav--open')));
-nav.querySelectorAll('.nav__links a').forEach((link) =>
-  link.addEventListener('click', () => setMenu(false))
-);
-
-// ===== в логотипе — домен, с которого открыли сайт (.ru или .online) =====
-const tld = document.querySelector('.nav__tld');
-const domain = location.hostname.replace(/^www\./, '');
-// на localhost и *.vercel.app оставляем .ru из разметки
-if (tld && domain.startsWith('maybenextime.')) {
-  tld.textContent = domain.slice('maybenextime'.length);
-}
-
-// ===== шапка становится «стеклянной» после начала скролла =====
-const header = document.querySelector('.header');
-const onScroll = () => header.classList.toggle('header--scrolled', window.scrollY > 10);
-onScroll();
-window.addEventListener('scroll', onScroll, { passive: true });
-
-// ===== плавное появление блоков =====
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (!entry.isIntersecting) return;
-    entry.target.classList.add('is-visible');
-    revealObserver.unobserve(entry.target);
-  });
-}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
-
-// ===== подсветка текущего раздела в меню =====
-const navLinks = document.querySelectorAll('.nav__links a');
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (!entry.isIntersecting) return;
-    navLinks.forEach((link) =>
-      link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`)
-    );
-  });
-}, { rootMargin: '-45% 0px -50% 0px' });
-
-document.querySelectorAll('main section[id]').forEach((section) => sectionObserver.observe(section));
-
-// ===== печатающийся подзаголовок =====
-const typed = document.querySelector('.typed');
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (typed && !reduceMotion) {
-  const words = JSON.parse(typed.dataset.words);
-  let wordIndex = 0;
-  let charIndex = words[0].length;
-  let deleting = true;
-
-  const tick = () => {
-    const word = words[wordIndex];
-    charIndex += deleting ? -1 : 1;
-    typed.textContent = word.slice(0, charIndex);
-
-    let delay = deleting ? 35 : 75;
-    if (!deleting && charIndex === word.length) {
-      deleting = true;
-      delay = 2200;
-    } else if (deleting && charIndex === 0) {
-      deleting = false;
-      wordIndex = (wordIndex + 1) % words.length;
-      delay = 400;
-    }
-    setTimeout(tick, delay);
-  };
-
-  setTimeout(tick, 2800);
-}
-
-// ===== свечение карточек за курсором =====
-document.querySelectorAll('.project').forEach((card) => {
-  card.addEventListener('pointermove', (e) => {
-    const rect = card.getBoundingClientRect();
-    card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-    card.style.setProperty('--my', `${e.clientY - rect.top}px`);
-  });
+// переключатель темы: плавно меняет цвета и запоминает выбор
+const root = document.documentElement;
+document.getElementById('theme').addEventListener('click', () => {
+  root.classList.add('theme-anim');
+  root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+  try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+  clearTimeout(window.__ta); window.__ta = setTimeout(() => root.classList.remove('theme-anim'), 700);
 });
 
-// ===== копирование почты =====
-document.querySelectorAll('[data-copy]').forEach((btn) => {
-  const label = btn.textContent;
-  btn.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(btn.dataset.copy);
-      btn.textContent = 'скопировано ✓';
-      btn.classList.add('is-copied');
-      setTimeout(() => {
-        btn.textContent = label;
-        btn.classList.remove('is-copied');
-      }, 1800);
-    } catch {
-      // браузер не дал доступ к буферу — рядом всё равно есть mailto-ссылка
-    }
+// облака
+const layerDark = document.querySelector('.layer.dark');
+const sz = Math.min(1, .45 + innerWidth / 1800);
+const cloudBox = document.createElement('div'); cloudBox.style.cssText = 'position:absolute;inset:0'; document.getElementById('sky').append(cloudBox);
+const cloudEls = [
+  { x: 4, y: 20, s: 1, t: 70, p: .2 }, { x: 66, y: 8, s: .8, t: 86, p: .3 }, { x: 74, y: 48, s: 1.2, t: 64, p: .4 },
+  { x: -6, y: 62, s: .9, t: 78, p: .5 }, { x: 36, y: 82, s: 1.3, t: 72, p: .35 },
+].map((c, n) => {
+  const s = c.s * sz, wrap = document.createElement('div');
+  wrap.className = 'cloud'; wrap.style.cssText = `left:${c.x}vw;top:${c.y}vh;width:${380 * s}px;height:${160 * s}px`;
+  [[0, 40, 46], [22, 10, 58], [48, 22, 50], [70, 38, 40], [14, 52, 34], [40, 54, 44]].forEach(([l, t, d]) => {
+    const i = document.createElement('i'); i.style.cssText = `left:${l}%;top:${t}%;width:${d * s * 3.4}px;height:${d * s * 3.4}px`; wrap.append(i);
   });
+  const drift = document.createElement('div'); drift.className = 'drift'; drift.style.setProperty('--t', c.t + 's'); drift.style.animationDelay = -(n * 15) + 's';
+  drift.append(wrap); cloudBox.append(drift);
+  return { el: wrap, p: c.p };
 });
+addEventListener('pointermove', (e) => {
+  const mx = e.clientX / innerWidth - .5, my = e.clientY / innerHeight - .5;
+  cloudEls.forEach(({ el, p }) => (el.style.transform = `translate(${mx * 90 * p}px, ${my * 50 * p}px)`));
+}, { passive: true });
+
+const header = document.getElementById('top');
+addEventListener('scroll', () => header.classList.toggle('on', scrollY > innerHeight * .5), { passive: true });
+
+// видео (оно без звука): играет, только пока карточка на экране
+const box = document.getElementById('nsVideo'), video = box.querySelector('video');
+new IntersectionObserver(([e]) => { e.isIntersecting ? video.play().catch(() => {}) : video.pause(); }, { threshold: .35 }).observe(box);
+
+document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'скопировано ✓'; b.classList.add('ok'); setTimeout(() => { b.textContent = 'копировать'; b.classList.remove('ok'); }, 1600); } catch {}
+}));

@@ -18,13 +18,15 @@
   <meta property="og:title" content="Даня — портфолио разработчика">
   <meta property="og:description" content="Проекты, стек и контакты. Открыт к стажировкам и джуниор-позициям.">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:image" content="https://www.maybenextime.ru/og-image.png">
+  <meta property="og:image" content="https://www.maybenextime.ru/og-image.png?v=2">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Даня — начинающий разработчик. Открыт к стажировкам">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <!-- тема ставится до отрисовки, чтобы не было вспышки: по умолчанию тёмная, светлая — если посетитель её выбрал -->
   <script>
     (() => { let t = null; try { t = localStorage.getItem('theme'); } catch {} const r = document.documentElement; r.dataset.theme = t === 'light' ? 'light' : 'dark'; r.classList.add('js'); })();
@@ -82,9 +84,9 @@
       </div>
     </div>
     <div class="nums" data-play>
-      <div class="ncard glass-card rv"><b class="num" style="--to:18"></b><span class="cap">лет</span></div>
-      <div class="ncard glass-card rv" style="--d:.12s"><div class="numrow"><span class="pre hl">с</span><b class="num hl" style="--to:14"></b></div><span class="cap">лет изучаю программирование</span></div>
-      <div class="ncard glass-card rv" style="--d:.24s"><b class="num" style="--to:3"></b><span class="cap">курс колледжа, учусь на программиста</span></div>
+      <div class="ncard glass-card rv"><b class="num" data-to="18">18</b><span class="cap">лет</span></div>
+      <div class="ncard glass-card rv" style="--d:.12s"><div class="numrow"><span class="pre hl">с</span><b class="num hl" data-to="14">14</b></div><span class="cap">лет изучаю програм&shy;мирование</span></div>
+      <div class="ncard glass-card rv" style="--d:.24s"><b class="num" data-to="3">3</b><span class="cap">курс колледжа, учусь на програм&shy;миста</span></div>
     </div>
   </section>
 
@@ -159,6 +161,10 @@
     </div>
   </section>
 </main>
-<footer><span>© 2026 maybenextime</span><span>сделано руками, без конструкторов</span></footer>
+<footer>
+  <span>© 2026 maybenextime</span>
+  <button class="totop" id="totop" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg>Наверх</button>
+  <span>сделано руками, без конструкторов</span>
+</footer>
 </body>
 </html>

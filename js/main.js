@@ -46,3 +46,23 @@ new IntersectionObserver(([e]) => { e.isIntersecting ? video.play().catch(() => 
 document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'скопировано ✓'; b.classList.add('ok'); setTimeout(() => { b.textContent = 'копировать'; b.classList.remove('ok'); }, 1600); } catch {}
 }));
+
+// цифры 18 / 14 / 3 считаются от нуля, когда блок появляется на экране
+// (раньше считал CSS через @property — на iPhone цифра не перерисовывалась и висел 0)
+const nums = document.querySelector('.nums');
+if (nums && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const els = [...nums.querySelectorAll('.num')];
+  els.forEach((el) => (el.textContent = '0'));
+  nums.addEventListener('play', () => els.forEach((el, n) => {
+    const to = +el.dataset.to, delay = 200 + n * 120, dur = 1600, t0 = performance.now() + delay;
+    const tick = (now) => {
+      const p = Math.min(1, Math.max(0, (now - t0) / dur));
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 4)));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }), { once: true });
+}
+
+// кнопка «Наверх» в самом низу
+document.getElementById('totop').addEventListener('click', (e) => { scrollTo({ top: 0, behavior: 'smooth' }); e.currentTarget.blur(); });

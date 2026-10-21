@@ -11,6 +11,8 @@ document.getElementById('theme').addEventListener('click', () => {
   root.classList.add('theme-anim');
   root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
   try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+  // цвет панелей браузера (Chrome на Android, старые iOS) — как --edge в style.css
+  document.querySelector('meta[name=theme-color]').content = root.dataset.theme === 'light' ? '#e4e8fb' : '#17173f';
   clearTimeout(window.__ta); window.__ta = setTimeout(() => root.classList.remove('theme-anim'), 700);
 });
 

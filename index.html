@@ -6,7 +6,7 @@
   <title>Даня — портфолио разработчика</title>
   <meta name="description" content="Портфолио начинающего разработчика: проекты, стек, контакты. Изучаю программирование и довожу проекты до рабочего состояния.">
   <link rel="canonical" href="https://www.maybenextime.ru/">
-  <meta name="theme-color" content="#0b0d18">
+  <meta name="theme-color" content="#17173f">
   <meta name="color-scheme" content="dark light">
   <!-- у сайта свои тёмная и светлая темы — просим Dark Reader не перекрашивать его -->
   <meta name="darkreader-lock">
@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <!-- тема ставится до отрисовки, чтобы не было вспышки: по умолчанию тёмная, светлая — если посетитель её выбрал -->
   <script>
-    (() => { let t = null; try { t = localStorage.getItem('theme'); } catch {} const r = document.documentElement; r.dataset.theme = t === 'light' ? 'light' : 'dark'; r.classList.add('js'); })();
+    (() => { let t = null; try { t = localStorage.getItem('theme'); } catch {} const r = document.documentElement; r.dataset.theme = t === 'light' ? 'light' : 'dark'; r.classList.add('js'); if (t === 'light') document.querySelector('meta[name=theme-color]').content = '#e4e8fb'; })();
   </script>
   <link rel="preload" href="fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">

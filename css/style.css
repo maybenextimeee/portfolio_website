@@ -84,7 +84,9 @@ a { color: inherit; text-decoration: none; }
 @supports (-webkit-touch-callout: none) {
   body { background-color: var(--edge); }
   .sky::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(var(--edge), transparent 110px), linear-gradient(0deg, var(--edge), transparent 90px); }
+    background: linear-gradient(var(--edge), transparent 110px), linear-gradient(0deg, var(--edge) 80px, transparent 210px); }
+  /* снизу — полоса сплошного цвета: когда страница пружинит в самом низу или панель Safari выезжает, край неба на миг
+     уходит под панель, и раньше над ней мелькала тёмная полоса */
 }
 .cloud { position: absolute; filter: blur(var(--cloud-blur)); opacity: .85; transition: transform 1.2s var(--ease); }
 .cloud i { position: absolute; border-radius: 50%; background: var(--cloud); transition: background-color .8s; }

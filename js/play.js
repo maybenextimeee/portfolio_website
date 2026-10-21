@@ -13,6 +13,7 @@
     .play .rv, .rv.play { animation: rv var(--dur, .9s) cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--d, 0s); }
     .rv.done { animation: none !important; opacity: 1 !important; }
     @keyframes rv { from { opacity: 0; transform: translateY(26px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+    @media (hover: none) { @keyframes rv { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } } }
     @media (prefers-reduced-motion: reduce) { .js [data-play] .rv, .js .rv[data-play] { opacity: 1; } .play .rv, .rv.play { animation: none; } }`;
   document.head.append(css);
 

@@ -26,7 +26,7 @@
   --shadow: 0, 0, 0; --shadow-a: .55;
   --hl: linear-gradient(100deg, #93a6ff, #b9a2ff 50%, #e6a9f0);
   --btn-bg: #eef0fb; --btn-ink: #10122a; --btn-shadow: rgba(140, 150, 255, .35);
-  --cloud: rgba(150, 160, 255, .09); --cloud-blur: 26px;
+  --cloud: rgba(150, 160, 255, .09); --cloud-core: 15%;
   --orb: .38; --chip-bg: rgba(255, 255, 255, .06);
   --header-bg: rgba(16, 18, 36, .55);
   --sky-dark: 1; --sky-light: 0;
@@ -40,7 +40,7 @@
   --shadow: 60, 70, 150; --shadow-a: .45;
   --hl: linear-gradient(100deg, #4b5fd6, #8466dd 55%, #b96fd2);
   --btn-bg: #1e2033; --btn-ink: #ffffff; --btn-shadow: rgba(30, 32, 51, .55);
-  --cloud: #fbfbff; --cloud-blur: 14px;
+  --cloud: #fbfbff; --cloud-core: 52%;
   --orb: .8; --chip-bg: rgba(255, 255, 255, .5);
   --header-bg: rgba(255, 255, 255, .45);
   --sky-dark: 0; --sky-light: 1;
@@ -63,33 +63,43 @@ a { color: inherit; text-decoration: none; }
 .layer { position: absolute; inset: 0; transition: opacity .8s; }
 .layer.dark { opacity: var(--sky-dark); background: linear-gradient(180deg, #0f1434 0%, #161338 34%, #120f28 66%, #0b0d18 100%); }
 .layer.light { opacity: var(--sky-light); background: linear-gradient(180deg, #dde5fb 0%, #e8e4fb 32%, #f1ebfa 62%, #f6f6fb 100%); }
-.sun { position: absolute; left: 60%; top: 18%; width: 46vmax; height: 46vmax; margin: -23vmax 0 0 -23vmax; filter: blur(60px); animation: morph 18s ease-in-out infinite; }
-.layer.dark .sun { opacity: .75; background: radial-gradient(circle at 40% 40%, #3c51c9, #4b3aa8 50%, #3a2878 75%, transparent); }
-.layer.light .sun { opacity: .85; background: radial-gradient(circle at 40% 40%, #e6ecff, #b9c6ff 50%, #cbb7f4 75%, #e9c9f2); }
+.sun { position: absolute; left: 60%; top: 18%; width: 56vmax; height: 56vmax; margin: -28vmax 0 0 -28vmax; animation: morph 18s ease-in-out infinite; }
+/* мягкий край — в самом градиенте, а «дыхание» — через transform: раньше форма (border-radius) с blur(60px)
+   перерисовывалась каждый кадр, и на телефоне от этого дёргалась прокрутка */
+.layer.dark .sun { opacity: .8; background: radial-gradient(closest-side at 46% 46%, #3c51c9, #4b3aa8 46%, rgba(58, 40, 120, .85) 72%, transparent); }
+.layer.light .sun { opacity: .85; background: radial-gradient(closest-side at 46% 46%, #e6ecff, #b9c6ff 46%, rgba(203, 183, 244, .9) 72%, transparent); }
+/* у невидимой темы солнце не крутим */
+:root[data-theme="light"] .layer.dark .sun, :root:not([data-theme="light"]) .layer.light .sun { animation-play-state: paused; }
 .rise { position: absolute; inset: 0; animation: sunrise 2.6s cubic-bezier(.16, 1, .3, 1) both; }
 @keyframes sunrise { from { transform: translateY(42vh) scale(.8); opacity: 0 } to { transform: none; opacity: 1 } }
 @keyframes morph {
-  0%, 100% { border-radius: 42% 58% 62% 38% / 45% 40% 60% 55% } 33% { border-radius: 63% 37% 46% 54% / 58% 63% 37% 42% }
-  66% { border-radius: 38% 62% 33% 67% / 41% 47% 53% 59% }
+  0%, 100% { transform: rotate(0deg) scale(1.06, .94) } 33% { transform: rotate(50deg) scale(.94, 1.07) }
+  66% { transform: rotate(-35deg) scale(1.05, .97) }
 }
-.stars { position: absolute; inset: 0; opacity: calc(var(--sky-dark) * .7); transition: opacity .8s;
+.stars { position: absolute; inset: 0; opacity: .7;
   background-image: radial-gradient(1px 1px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 28% 62%, #dfe4ff, transparent), radial-gradient(1.5px 1.5px at 44% 8%, #fff, transparent),
     radial-gradient(1px 1px at 63% 34%, #e8e2ff, transparent), radial-gradient(1px 1px at 78% 12%, #fff, transparent), radial-gradient(1.5px 1.5px at 88% 54%, #dfe4ff, transparent),
     radial-gradient(1px 1px at 8% 82%, #fff, transparent), radial-gradient(1px 1px at 52% 88%, #e8e2ff, transparent), radial-gradient(1px 1px at 92% 86%, #fff, transparent),
     radial-gradient(1px 1px at 36% 40%, #fff, transparent), radial-gradient(1px 1px at 70% 72%, #fff, transparent); animation: twinkle 5s ease-in-out infinite alternate; }
-@keyframes twinkle { to { filter: brightness(.6) } }
+@keyframes twinkle { to { opacity: .42 } }
 /* iPhone/iPad (Safari 26): под строкой состояния и нижней панелью fixed-элементы не рисуются, а сами полосы Safari
    заливает цветом фона body — с почти чёрным фоном выходили чёрные полосы. Красим body в цвет неба у краёв,
    а небо плавно уходит в этот цвет сверху и снизу, чтобы не было границы */
 @supports (-webkit-touch-callout: none) {
   body { background-color: var(--edge); }
+  /* без «пружинки» у краёв: когда страница пружинит, браузер красит место за её концом своим тёмным цветом
+     поверх неба, и над нижней панелью появлялся разрыв */
+  html { overscroll-behavior-y: none; }
   .sky::after { content: ""; position: absolute; inset: 0; pointer-events: none;
     background: linear-gradient(var(--edge), transparent 110px), linear-gradient(0deg, var(--edge) 80px, transparent 210px); }
   /* снизу — полоса сплошного цвета: когда страница пружинит в самом низу или панель Safari выезжает, край неба на миг
      уходит под панель, и раньше над ней мелькала тёмная полоса */
 }
-.cloud { position: absolute; filter: blur(var(--cloud-blur)); opacity: .85; transition: transform 1.2s var(--ease); }
-.cloud i { position: absolute; border-radius: 50%; background: var(--cloud); transition: background-color .8s; }
+.cloud { position: absolute; opacity: .85; transition: transform 1.2s var(--ease); }
+/* каждое облачко — круг с мягкой маской по краю. Раньше облако размывалось целиком (filter: blur), и WebKit
+   при смене темы иногда рисовал его размытым квадратом; заодно так легче для телефона */
+.cloud i { position: absolute; translate: -23% -23%; border-radius: 50%; background: var(--cloud); transition: background-color .8s;
+  -webkit-mask-image: radial-gradient(closest-side, #000 var(--cloud-core), transparent); mask-image: radial-gradient(closest-side, #000 var(--cloud-core), transparent); }
 .drift { animation: drift var(--t, 80s) ease-in-out infinite alternate; }
 @keyframes drift { from { transform: translateX(-9vw) } to { transform: translateX(9vw) } }
 
@@ -214,7 +224,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ===== контакты: одна цельная карточка ===== */
 .contact-card { position: relative; overflow: hidden; text-align: center; padding: 96px 40px 84px; border-radius: 44px; }
-.contact-card::before, .contact-card::after { content: ""; position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none; opacity: var(--orb); transition: opacity .6s; }
+.contact-card::before, .contact-card::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; opacity: var(--orb); transition: opacity .6s; }
 .contact-card::before { width: 560px; height: 420px; left: 50%; top: -260px; translate: -50% 0; background: radial-gradient(circle, #8fa2ff, transparent 65%); animation: glowA 12s ease-in-out infinite alternate; }
 .contact-card::after { width: 420px; height: 420px; right: -160px; bottom: -220px; background: radial-gradient(circle, #c4a6f7, transparent 65%); animation: glowB 14s ease-in-out infinite alternate; }
 @keyframes glowA { to { translate: -40% 30px } }
@@ -246,5 +256,13 @@ footer span:last-child { text-align: right; }
   .sheet { padding: 26px; }
   .contact-card { padding: 64px 20px 56px; border-radius: 30px; } .contact-card .h2 { font-size: min(38px, 8.8vw); }
   footer { grid-template-columns: 1fr; justify-items: center; gap: 10px; padding: 10px 20px 50px; text-align: center; } footer span:last-child { text-align: center; } .totop { order: -1; margin-bottom: 10px; }
+}
+/* телефоны и планшеты: стекло без размытия того, что под ним (небо и так мягкое — на вид почти без разницы),
+   и появление блоков без blur — иначе на прокрутке у проектов всё дёргалось */
+@media (hover: none) {
+  .glass-card, .chip, .btn.glass, .nick, .totop { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  :root { --glass: rgba(255, 255, 255, .075); --glass-2: rgba(255, 255, 255, .095); }
+  :root[data-theme="light"] { --glass: rgba(255, 255, 255, .6); --glass-2: rgba(255, 255, 255, .7); }
+  @keyframes lup { from { opacity: 0; transform: translateY(.35em) rotate(5deg) } to { opacity: 1; transform: none } }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .js .name .l { opacity: 1; } }

@@ -27,13 +27,15 @@ const cloudEls = [
   const s = c.s * sz, wrap = document.createElement('div');
   wrap.className = 'cloud'; wrap.style.cssText = `left:${c.x}vw;top:${c.y}vh;width:${380 * s}px;height:${160 * s}px`;
   [[0, 40, 46], [22, 10, 58], [48, 22, 50], [70, 38, 40], [14, 52, 34], [40, 54, 44]].forEach(([l, t, d]) => {
-    const i = document.createElement('i'); i.style.cssText = `left:${l}%;top:${t}%;width:${d * s * 3.4}px;height:${d * s * 3.4}px`; wrap.append(i);
+    // круг крупнее, чем виден: мягкий край — маской (см. .cloud i в style.css)
+    const i = document.createElement('i'); i.style.cssText = `left:${l}%;top:${t}%;width:${d * s * 5}px;height:${d * s * 5}px`; wrap.append(i);
   });
   const drift = document.createElement('div'); drift.className = 'drift'; drift.style.setProperty('--t', c.t + 's'); drift.style.animationDelay = -(n * 15) + 's';
   drift.append(wrap); cloudBox.append(drift);
   return { el: wrap, p: c.p };
 });
-addEventListener('pointermove', (e) => {
+// облака чуть следуют за курсором — только где есть мышь (на телефоне это лишняя работа во время прокрутки)
+if (matchMedia('(hover: hover)').matches) addEventListener('pointermove', (e) => {
   const mx = e.clientX / innerWidth - .5, my = e.clientY / innerHeight - .5;
   cloudEls.forEach(({ el, p }) => (el.style.transform = `translate(${mx * 90 * p}px, ${my * 50 * p}px)`));
 }, { passive: true });

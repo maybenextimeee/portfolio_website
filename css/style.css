@@ -51,7 +51,14 @@ html { overflow-x: hidden; scroll-behavior: smooth; }
 body { font: 400 18px/1.6 "Manrope", system-ui, sans-serif; color: var(--ink); background: var(--bg); overflow-x: clip; -webkit-font-smoothing: antialiased; transition: background-color .6s, color .6s; }
 a { color: inherit; text-decoration: none; }
 /* плавная смена темы: включается только на время переключения */
-.theme-anim *, .theme-anim *::before, .theme-anim *::after { transition: background-color .6s, border-color .6s, color .6s, box-shadow .6s, opacity .6s !important; }
+.theme-anim *, .theme-anim *::before, .theme-anim *::after { transition: background-color .6s, border-color .6s, box-shadow .6s, opacity .6s !important; }
+/* цвета текста плавно меняются один раз — сами переменные на :root, а элементы просто берут их значение.
+   Раньше плавно менялся color у каждого элемента, и вложенный текст догонял родителя с задержкой на каждом уровне:
+   буквы имени перекрашивались больше чем через секунду после фона */
+@property --ink { syntax: '<color>'; inherits: true; initial-value: #eef0fb; }
+@property --muted { syntax: '<color>'; inherits: true; initial-value: #9ba1c2; }
+@property --btn-ink { syntax: '<color>'; inherits: true; initial-value: #10122a; }
+:root.theme-anim { transition: --ink .6s, --muted .6s, --btn-ink .6s; }
 
 /* выделение текста мышью: видно и обычный, и градиентный текст */
 ::selection { background: rgba(143, 160, 255, .38); color: var(--ink); }
@@ -87,9 +94,6 @@ a { color: inherit; text-decoration: none; }
    а небо плавно уходит в этот цвет сверху и снизу, чтобы не было границы */
 @supports (-webkit-touch-callout: none) {
   body { background-color: var(--edge); }
-  /* без «пружинки» у краёв: когда страница пружинит, браузер красит место за её концом своим тёмным цветом
-     поверх неба, и над нижней панелью появлялся разрыв */
-  html { overscroll-behavior-y: none; }
   .sky::after { content: ""; position: absolute; inset: 0; pointer-events: none;
     background: linear-gradient(var(--edge), transparent 110px), linear-gradient(0deg, var(--edge) 80px, transparent 210px); }
   /* снизу — полоса сплошного цвета: когда страница пружинит в самом низу или панель Safari выезжает, край неба на миг

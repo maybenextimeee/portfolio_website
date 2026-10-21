@@ -30,6 +30,7 @@
   --orb: .38; --chip-bg: rgba(255, 255, 255, .06);
   --header-bg: rgba(16, 18, 36, .55);
   --sky-dark: 1; --sky-light: 0;
+  --edge: #17173f; /* цвет полос под панелями Safari на iPhone (см. ниже) */
   --ease: cubic-bezier(.2, .8, .2, 1);
 }
 :root[data-theme="light"] {
@@ -43,6 +44,7 @@
   --orb: .8; --chip-bg: rgba(255, 255, 255, .5);
   --header-bg: rgba(255, 255, 255, .45);
   --sky-dark: 0; --sky-light: 1;
+  --edge: #e4e8fb;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { overflow-x: hidden; scroll-behavior: smooth; }
@@ -76,6 +78,14 @@ a { color: inherit; text-decoration: none; }
     radial-gradient(1px 1px at 8% 82%, #fff, transparent), radial-gradient(1px 1px at 52% 88%, #e8e2ff, transparent), radial-gradient(1px 1px at 92% 86%, #fff, transparent),
     radial-gradient(1px 1px at 36% 40%, #fff, transparent), radial-gradient(1px 1px at 70% 72%, #fff, transparent); animation: twinkle 5s ease-in-out infinite alternate; }
 @keyframes twinkle { to { filter: brightness(.6) } }
+/* iPhone/iPad (Safari 26): под строкой состояния и нижней панелью fixed-элементы не рисуются, а сами полосы Safari
+   заливает цветом фона body — с почти чёрным фоном выходили чёрные полосы. Красим body в цвет неба у краёв,
+   а небо плавно уходит в этот цвет сверху и снизу, чтобы не было границы */
+@supports (-webkit-touch-callout: none) {
+  body { background-color: var(--edge); }
+  .sky::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(var(--edge), transparent 110px), linear-gradient(0deg, var(--edge), transparent 90px); }
+}
 .cloud { position: absolute; filter: blur(var(--cloud-blur)); opacity: .85; transition: transform 1.2s var(--ease); }
 .cloud i { position: absolute; border-radius: 50%; background: var(--cloud); transition: background-color .8s; }
 .drift { animation: drift var(--t, 80s) ease-in-out infinite alternate; }
@@ -165,8 +175,13 @@ a { color: inherit; text-decoration: none; }
   transition: transform .6s var(--ease), box-shadow .6s; }
 .card:hover { transform: translateY(-6px); }
 .card:nth-child(1) { grid-row: span 2; }
-.card::before { content: ""; position: absolute; width: 380px; height: 380px; right: -140px; top: -150px; border-radius: 50%; background: var(--c); filter: blur(40px); opacity: var(--orb); transition: transform 1.2s var(--ease), opacity .6s; }
-.card:hover::before { transform: translate(-30px, 30px) scale(1.1); }
+/* сияние в углу карточки — мягкий градиент на весь блок, а не размытый круг: круг Safari во время анимации появления
+   обрезал прямоугольником, и в правом верхнем углу мелькал острый угол */
+.card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: var(--orb);
+  background: radial-gradient(closest-side, var(--c), var(--c) 40%, transparent) right -220px top -230px / 540px 540px no-repeat;
+  background: radial-gradient(closest-side, var(--c), var(--c) 40%, color-mix(in srgb, var(--c) 50%, transparent) 70%, transparent) right -220px top -230px / 540px 540px no-repeat;
+  transition: background-position 1.2s var(--ease), background-size 1.2s var(--ease), opacity .6s; }
+.card:hover::before { background-position: right -217px top -227px; background-size: 594px 594px; }
 .card > * { position: relative; }
 .meta { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 700; color: var(--muted); }
 .st { padding: 5px 12px; border-radius: 999px; background: var(--glass-2); border: 1px solid var(--glass-line); color: var(--ink); font-weight: 600; font-size: 13px; }
